@@ -24,7 +24,6 @@
     <![endif]-->
 </head>
 <body>
-	<% //uso dei java Bean per creare un oggetto remote da poter usare durante la sessione %>
 	<jsp:useBean id="remote_object" scope="session" class="domus.client.Client" />
 
 	<div class="container-fluid">
