@@ -50,16 +50,7 @@
           <div class="col-md-4"><h4>Temperature</h4>
 
             <div class="row">
-              <div class="col-md-4">kitchen</div>
-              <div class="col-md-2"><% out.print(remote_object.getLightState()); %> </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4">living room</div>
-              <div class="col-md-2"><% out.print(remote_object.test()); %></div>
-            </div>
-            <div class="row">
-              <div class="col-md-4">bathroom</div>
-              <div class="col-md-2"><% out.print(remote_object.test()); %></div>
+              <div class="col-md-2"><% out.print(remote_object.getActualTemperature()); %> </div>
             </div>
 
           </div>
@@ -68,7 +59,7 @@
           <div class="col-md-4"><h4>Thermostat</h4>
 
             <div class="row">
-              <div class="col-md-4">setted temperature</div>
+              <div class="col-md-5">setted temperature</div>
               <div class="col-md-2">
               	<form method="POST" action="setThermostatTemperature.jsp" >
               		<input type="text"
@@ -80,7 +71,7 @@
               <!--<div class="col-md-2">23</div>-->
             </div>
             <div class="row">
-              <div class="col-md-4">state</div>
+              <div class="col-md-5">state</div>
               <div class="col-md-2"><span class="label label-success">working</span></div>
             </div>
 

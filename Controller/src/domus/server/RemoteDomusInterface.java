@@ -11,12 +11,12 @@ public interface RemoteDomusInterface extends Remote{
 	void setSettedTemperature(double d) throws RemoteException;
 	
 	// LIGHT
-	boolean getLightState() throws RemoteException;
-	void setLightState(boolean b) throws RemoteException;
+	boolean getLightState(int room) throws RemoteException;
+	void setLightState(int room, boolean b) throws RemoteException;
 	
 	// SHUTTER
-	boolean getShutterState() throws RemoteException;
-	void setShutterState(boolean b) throws RemoteException;
+	boolean getShutterState(int room) throws RemoteException;
+	void setShutterState(int room, boolean b) throws RemoteException;
 	
 	// SPRINKLER
 	boolean getSprinklerState() throws RemoteException;

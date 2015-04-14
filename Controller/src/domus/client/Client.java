@@ -9,9 +9,7 @@ import domus.server.RemoteDomusInterface;
 public class Client {
 	private RemoteDomusInterface rdi;
 
-	public String test() {
-		return "3000 xd";
-	}
+
 	/*
 	 * Costruttore: crea l'oggetto remoto 
 	 */
@@ -79,18 +77,18 @@ public class Client {
 	 * 		-getLightState
 	 * 		-setLightState
 	 */
-	public boolean getLightState() {
+	public boolean getLightState(int room) {
 		try {
-			return rdi.getLightState();
+			return rdi.getLightState(room);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
 		return false;
 	}
 	
-	public void setLightState(boolean b){
+	public void setLightState(int room, boolean b){
 		try {
-			rdi.setLightState(b);
+			rdi.setLightState(room, b);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -101,18 +99,18 @@ public class Client {
 	 * 		-getShutterState
 	 * 		-setShutterState
 	 */
-	public boolean getShutterState() {
+	public boolean getShutterState(int room) {
 		try {
-			return rdi.getShutterState();
+			return rdi.getShutterState(room);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
 		return false;
 	}
 	
-	public void setShutterState(boolean b){
+	public void setShutterState(int room, boolean b){
 		try {
-			rdi.setShutterState(b);
+			rdi.setShutterState(room, b);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
