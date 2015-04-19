@@ -192,15 +192,6 @@
 					<div class="col-md-4">activation time</div>
 					<%
 						String tmp = remote_object.getActivationTime();
-						//SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-						//Date d = format.parse(tmp);
-						//Calendar c = Calendar.getInstance();
-						//c.setTime(d);
-						//int hour = Calendar.HOUR_OF_DAY;
-						//int hour = 6;
-						//int minute = Calendar.MINUTE;
-						//int minute = 6;
-						//out.print(tmp);
 						StringTokenizer st = new StringTokenizer(tmp,":");
 						int hour = Integer.parseInt(st.nextToken());
 						int minute = Integer.parseInt(st.nextToken());

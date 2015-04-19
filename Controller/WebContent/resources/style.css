@@ -1,0 +1,22 @@
+@CHARSET "UTF-8";
+
+.page-header {
+	margin-top:0;
+}
+
+.number-input {
+	width: 60px;
+}
+
+#irrigation .row {
+	margin-bottom: 5px;
+}
+
+
+#activation-time input {
+	display: inline;
+}
+
+.not-working {
+	color:#888;
+}
