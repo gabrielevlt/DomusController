@@ -9,7 +9,6 @@ import domus.server.RemoteDomusInterface;
 public class Client {
 	private RemoteDomusInterface rdi;
 
-
 	/*
 	 * Costruttore: crea l'oggetto remoto 
 	 */
@@ -122,6 +121,8 @@ public class Client {
 	 * 		-setSprinklerState
 	 * 		-getDutyTime
 	 * 		-setDutyTime
+	 * 		-getActivationTime
+	 * 		-setActivationTime
 	 */
 	public boolean getSprinklerState() {
 		try {
@@ -159,7 +160,22 @@ public class Client {
 	
 	
 	
+	public String getActivationTime() {
+		try {
+			return rdi.getActivationTime();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
 	
+	public void setActivationTime(int h, int m) {
+		try {
+			rdi.setActivationTime(h,m);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	
@@ -169,8 +185,8 @@ public class Client {
 	public boolean test() {
 		boolean flag = true;
 		try {
-			System.out.print("\nRisposta server: " + rdi.getLightState() + "\n\n");
-			flag = rdi.getLightState();
+			System.out.print("\nRisposta server: " + rdi.getLightState(0) + "\n\n");
+			flag = rdi.getLightState(0);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

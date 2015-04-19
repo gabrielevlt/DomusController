@@ -17,11 +17,11 @@
 			String tmp = request.getParameter("settedTemperature");
 			double settedTemperature = Double.parseDouble(tmp);
 			
-			out.print(settedTemperature);
+			//out.print(settedTemperature);
 			
 			remote_object.setSettedTemperature(settedTemperature);
 			
-			out.print(remote_object.getSettedTemperature());
+			//out.print(remote_object.getSettedTemperature());
 		} catch (Exception e) {
 		}
 		response.sendRedirect("index.jsp");

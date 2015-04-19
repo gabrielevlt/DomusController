@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="domus.client.Client"%>
+<%@ page import="java.util.StringTokenizer"%>
+<%-- <%@ page import="java.text.SimpleDateFormat"%> --%>
+<%-- <%@ page import="java.util.Calendar"%> --%>
+<%-- <%@ page import="java.util.Date;"%> --%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +17,7 @@
 <link href="resources/bootstrap-3.3.4-dist/css/bootstrap.min.css"
 	rel="stylesheet">
 
-<link href="template.css" rel="stylesheet">
+<link href="resources/style.css" rel="stylesheet">
 
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -26,6 +30,12 @@
 <body>
 	<jsp:useBean id="remote_object" scope="session"
 		class="domus.client.Client" />
+	<%
+		//TEST
+		//remote_object.setLightState(0, false);
+		//remote_object.setLightState(0, true);
+		//remote_object.setLightState(0, false);
+	%>
 
 	<div class="container-fluid">
 		<!-- HEADER -->
@@ -68,19 +78,18 @@
 				<h4>Thermostat</h4>
 
 				<div class="row">
-					<div class="col-md-5">setted temperature</div>
-					<div class="col-md-2">
+					<div class="col-md-4">setted temperature</div>
+					<div class="col-md-3">
 						<form method="POST" action="setThermostatTemperature.jsp">
-							<input type="text" name="settedTemperature"
-								class="form-control number-input"
-								placeholder="<%out.print(remote_object.getSettedTemperature());%>">
+							<input type="number" name="settedTemperature"
+								class="form-control"
+								value="<%out.print(remote_object.getSettedTemperature());%>">
 						</form>
 					</div>
-					<!--<div class="col-md-2">23</div>-->
 				</div>
 				<div class="row">
-					<div class="col-md-5">state</div>
-					<div class="col-md-2">
+					<div class="col-md-4">state</div>
+					<div class="col-md-3">
 						<span class="label label-success">working</span>
 					</div>
 				</div>
@@ -92,7 +101,10 @@
 
 
 
-		<!-- LIGHTING SECTION - second row-->
+		<!-- LIGHTING SECTION - second row
+				luci di cucina/salotto/bagno
+		
+		-->
 		<div class="row well" id="lighting">
 			<div class="col-md-4">
 				<h3>Lighting</h3>
@@ -104,23 +116,21 @@
 					<div class="col-md-2">
 						<%
 							if (remote_object.getLightState(0))
-								out.print("<a href=\"setLight.jsp?state=off&room=0\"><span class=\"label label-success\">on</span>");
+								out.print("<a href=\"setLight.jsp?state=off&room=0\"><span class=\"label label-success\">on</span></a>");
 							else
-								out.print("<a href=\"setLight.jsp?state=on&room=0\"><span class=\"label label-danger\">off</span>");
+								out.print("<a href=\"setLight.jsp?state=on&room=0\"><span class=\"label label-danger\">off</span></a>");
 						%>
-						</a>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-4">living room</div>
 					<div class="col-md-2">
 						<%
-							if (remote_object.getLightState(0))
-								out.print("<a href=\"setLight.jsp?state=off&room=1\"><span class=\"label label-success\">on</span>");
+							if (remote_object.getLightState(1))
+								out.print("<a href=\"setLight.jsp?state=off&room=1\"><span class=\"label label-success\">on</span></a>");
 							else
-								out.print("<a href=\"setLight.jsp?state=on&room=1\"><span class=\"label label-danger\">off</span>");
+								out.print("<a href=\"setLight.jsp?state=on&room=1\"><span class=\"label label-danger\">off</span></a>");
 						%>
-						</a>
 					</div>
 
 				</div>
@@ -128,7 +138,7 @@
 					<div class="col-md-4">bathroom</div>
 					<div class="col-md-2">
 						<%
-							if (remote_object.getLightState(0))
+							if (remote_object.getLightState(2))
 								out.print("<a href=\"setLight.jsp?state=off&room=2\"><span class=\"label label-success\">on</span></a>");
 							else
 								out.print("<a href=\"setLight.jsp?state=on&room=2\"><span class=\"label label-danger\">off</span></a>");
@@ -140,8 +150,14 @@
 		<!--end lighting row-->
 
 
-		<!-- IRRIGATION SECTION - third row-->
-		<div class="row well" id="lighting">
+		<!-- IRRIGATION SECTION - third row
+				- stato dell'irrigatore
+				- durata dell'irrigazione
+				- ora della prossima irrigazione
+				- flag per attivare/disattivare prossima irrigazione
+				
+		-->
+		<div class="row well" id="irrigation">
 			<div class="col-md-4">
 				<h3>Irrigation</h3>
 			</div>
@@ -158,11 +174,49 @@
 						%>
 					</div>
 				</div>
+
 				<div class="row">
-					<div class="col-md-4">duty time</div>
+					<div class="col-md-4">duty time (minutes)</div>
 					<div class="col-md-2">
-						<input type="text" class="form-control number-input"
-							placeholder="<%out.print(remote_object.getDutyTime());%>">
+						<form method="POST" action="setSprinklerDutyTime.jsp">
+							<input type="number" 
+								class="form-control number-input 
+								<% if(!remote_object.getSprinklerState()) out.print("not-working"); %>"
+								name="dutyTime"
+								value="<%out.print(remote_object.getDutyTime());%>">
+						</form>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-4">activation time</div>
+					<%
+						String tmp = remote_object.getActivationTime();
+						//SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+						//Date d = format.parse(tmp);
+						//Calendar c = Calendar.getInstance();
+						//c.setTime(d);
+						//int hour = Calendar.HOUR_OF_DAY;
+						//int hour = 6;
+						//int minute = Calendar.MINUTE;
+						//int minute = 6;
+						//out.print(tmp);
+						StringTokenizer st = new StringTokenizer(tmp,":");
+						int hour = Integer.parseInt(st.nextToken());
+						int minute = Integer.parseInt(st.nextToken());
+					%>
+					<div id="activation-time" class="col-md-4">
+						<form method="POST" action="setSprinklerActivationTime.jsp">
+							<input type="number" name="hour"
+								class="form-control number-input
+								<% if(!remote_object.getSprinklerState()) out.print("not-working"); %>" 
+								value="<%out.print(hour);%>">
+							: <input type="number" name="minute"
+								class="form-control number-input
+								<% if(!remote_object.getSprinklerState()) out.print("not-working"); %>"
+								 value="<%out.print(minute);%>">
+							<input type="submit" value="Go">
+						</form>
 					</div>
 
 				</div>
@@ -171,8 +225,11 @@
 		<!--end irrigation row-->
 
 
-		<!-- SHUTTERS SECTION - fourth row-->
-		<div class="row well" id="lighting">
+		<!-- SHUTTERS SECTION - fourth row
+				tapparelle di cuina/salotto/bagno
+				
+		-->
+		<div class="row well" id="shutters">
 			<div class="col-md-4">
 				<h3>Shutters</h3>
 			</div>

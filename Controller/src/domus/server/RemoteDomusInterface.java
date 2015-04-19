@@ -5,22 +5,24 @@ import java.rmi.RemoteException;
 public interface RemoteDomusInterface extends Remote{
 	
 	// THERMOSTAT
-	boolean getThermostatState() throws RemoteException;
-	double getActualTemperature() throws RemoteException;
-	double getSettedTemperature() throws RemoteException;
-	void setSettedTemperature(double d) throws RemoteException;
+	public boolean getThermostatState() throws RemoteException;
+	public double getActualTemperature() throws RemoteException;
+	public double getSettedTemperature() throws RemoteException;
+	public void setSettedTemperature(double d) throws RemoteException;
 	
 	// LIGHT
-	boolean getLightState(int room) throws RemoteException;
-	void setLightState(int room, boolean b) throws RemoteException;
+	public boolean getLightState(int room) throws RemoteException;
+	public void setLightState(int room, boolean b) throws RemoteException;
 	
 	// SHUTTER
-	boolean getShutterState(int room) throws RemoteException;
-	void setShutterState(int room, boolean b) throws RemoteException;
+	public boolean getShutterState(int room) throws RemoteException;
+	public void setShutterState(int room, boolean b) throws RemoteException;
 	
 	// SPRINKLER
-	boolean getSprinklerState() throws RemoteException;
-	void setSprinklerState(boolean b) throws RemoteException;
-	int getDutyTime() throws RemoteException;
-	void setDutyTime(int i) throws RemoteException;
+	public boolean getSprinklerState() throws RemoteException;
+	public void setSprinklerState(boolean b) throws RemoteException;
+	public int getDutyTime() throws RemoteException;
+	public void setDutyTime(int i) throws RemoteException;
+	public String getActivationTime() throws RemoteException;
+	public void setActivationTime(int h, int m) throws RemoteException;
 }
