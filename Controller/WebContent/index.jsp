@@ -62,8 +62,8 @@
 				<div class="row">
 					<div class="col-md-2">
 						<%
-							NumberFormat formatter = new DecimalFormat("#0.00");
-							out.print(formatter.format(remote_object.getActualTemperature()));
+							NumberFormat f1 = new DecimalFormat("#0.00");
+							out.print(f1.format(remote_object.getActualTemperature()));
 						%>
 					</div>
 				</div>
@@ -73,6 +73,8 @@
 			<!-- thermostat column -->
 			<div class="col-md-4">
 				<h4>Thermostat</h4>
+
+
 
 				<div class="row">
 					<div class="col-md-4">setted temperature</div>
