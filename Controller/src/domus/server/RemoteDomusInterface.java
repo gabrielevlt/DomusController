@@ -6,6 +6,7 @@ public interface RemoteDomusInterface extends Remote{
 	
 	// THERMOSTAT
 	public boolean getThermostatState() throws RemoteException;
+	public void setThermostatState(boolean b) throws RemoteException;
 	public double getActualTemperature() throws RemoteException;
 	public double getSettedTemperature() throws RemoteException;
 	public void setSettedTemperature(double d) throws RemoteException;

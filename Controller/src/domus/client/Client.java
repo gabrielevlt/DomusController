@@ -18,8 +18,8 @@ public class Client {
 			String serviceName = "Domus";
 
 			// STUB -> rdi rappresenta l'oggetto remoto
-			//Registry registry = LocateRegistry.getRegistry("54.69.96.227",1099);
-			Registry registry = LocateRegistry.getRegistry("localhost");
+			Registry registry = LocateRegistry.getRegistry("ec2-52-11-250-213.us-west-2.compute.amazonaws.com");
+			//Registry registry = LocateRegistry.getRegistry("localhost");
 			rdi = (RemoteDomusInterface) registry.lookup(serviceName);
 
 		} catch (RemoteException e) {
@@ -31,7 +31,8 @@ public class Client {
 	
 	/*
 	 * THERMOSTAT
-	 * 		-getTheromastatState
+	 * 		-getThermostatState
+	 * 		-setThermostatState
 	 * 		-getActualTemperature
 	 * 		-getSettedTemperature
 	 * 		-setSettedTemperature
@@ -43,6 +44,14 @@ public class Client {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public void setThermostatState(boolean b) {
+		try {
+			rdi.setThermostatState(b);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public double getActualTemperature(){

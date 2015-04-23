@@ -2,9 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="domus.client.Client"%>
 <%@ page import="java.util.StringTokenizer"%>
-<%-- <%@ page import="java.text.SimpleDateFormat"%> --%>
-<%-- <%@ page import="java.util.Calendar"%> --%>
-<%-- <%@ page import="java.util.Date;"%> --%>
+<%@ page import="java.text.NumberFormat"%>
+<%@ page import="java.text.DecimalFormat"%>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,12 +31,7 @@
 <body>
 	<jsp:useBean id="remote_object" scope="session"
 		class="domus.client.Client" />
-	<%
-		//TEST
-		//remote_object.setLightState(0, false);
-		//remote_object.setLightState(0, true);
-		//remote_object.setLightState(0, false);
-	%>
+
 
 	<div class="container-fluid">
 		<!-- HEADER -->
@@ -66,7 +62,8 @@
 				<div class="row">
 					<div class="col-md-2">
 						<%
-							out.print(remote_object.getActualTemperature());
+							NumberFormat formatter = new DecimalFormat("#0.00");
+							out.print(formatter.format(remote_object.getActualTemperature()));
 						%>
 					</div>
 				</div>
@@ -82,7 +79,8 @@
 					<div class="col-md-3">
 						<form method="POST" action="setThermostatTemperature.jsp">
 							<input type="number" name="settedTemperature"
-								class="form-control"
+								class="form-control
+								<% if(!remote_object.getThermostatState()) out.print("not-working"); %>"
 								value="<%out.print(remote_object.getSettedTemperature());%>">
 						</form>
 					</div>
@@ -90,7 +88,12 @@
 				<div class="row">
 					<div class="col-md-4">state</div>
 					<div class="col-md-3">
-						<span class="label label-success">working</span>
+						<% 
+							if (remote_object.getThermostatState())
+									out.print("<a href=\"setThermostatState.jsp?state=off\"><span class=\"label label-success\">working</span></a>");
+								else
+									out.print("<a href=\"setThermostatState.jsp?state=on\"><span class=\"label label-danger\">not working</span></a>");
+						%>	
 					</div>
 				</div>
 
@@ -187,30 +190,36 @@
 						</form>
 					</div>
 				</div>
-
+				
+				
 				<div class="row">
 					<div class="col-md-4">activation time</div>
 					<%
-						String tmp = remote_object.getActivationTime();
-						StringTokenizer st = new StringTokenizer(tmp,":");
-						int hour = Integer.parseInt(st.nextToken());
-						int minute = Integer.parseInt(st.nextToken());
+						int hour = 0;
+						int minute = 0;
+						try{
+							String tmp = remote_object.getActivationTime();
+							StringTokenizer st = new StringTokenizer(tmp,":");
+							hour = Integer.parseInt(st.nextToken());
+							minute = Integer.parseInt(st.nextToken());
+						} catch(Exception e) {
+						}
 					%>
 					<div id="activation-time" class="col-md-4">
 						<form method="POST" action="setSprinklerActivationTime.jsp">
 							<input type="number" name="hour"
 								class="form-control number-input
 								<% if(!remote_object.getSprinklerState()) out.print("not-working"); %>" 
-								value="<%out.print(hour);%>">
+								value="<% out.print(hour); %>">
 							: <input type="number" name="minute"
 								class="form-control number-input
 								<% if(!remote_object.getSprinklerState()) out.print("not-working"); %>"
-								 value="<%out.print(minute);%>">
+								 value="<% out.print(minute); %>">
 							<input type="submit" value="Go">
 						</form>
 					</div>
-
 				</div>
+				 
 			</div>
 		</div>
 		<!--end irrigation row-->
